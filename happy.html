@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday! 🎉</title>
+  
+  <!-- Bubbly Cute Google Font -->
+  <link rel="preconnect" href="https://fonts.google.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.google.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Canvas Confetti Library for the celebration effect -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #FFE5EC 0%, #E8F0FE 100%);
+      font-family: 'Fredoka', sans-serif;
+      overflow: hidden;
+    }
+
+    /* Mobile Frame Container */
+    .app-container {
+      width: 100%;
+      max-width: 412px;
+      height: 100%;
+      max-height: 892px;
+      background: radial-gradient(circle at 50% 30%, #fffbf2 0%, rgba(255, 255, 255, 0) 70%);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 20px 50px 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+
+    @media (min-width: 600px) {
+      .app-container {
+        border-radius: 40px;
+        border: 8px solid #ffffff;
+        box-shadow: 0 20px 50px rgba(100, 110, 140, 0.15);
+        height: 90vh;
+      }
+    }
+
+    /* Floating Sparkles & Hearts Background styling */
+    .floating-decor {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .heart, .sparkle {
+      position: absolute;
+      animation: floatUp 6s ease-in-out infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-10vh) scale(1.1) rotate(360deg); opacity: 0; }
+    }
+
+    /* Title Styling matching the bubbly look */
+    .header-container {
+      z-index: 2;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .title {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: #3B82F6;
+      text-transform: uppercase;
+      margin: 0;
+      letter-spacing: 1px;
+      text-shadow: 
+        -3px -3px 0 #fff,  
+         3px -3px 0 #fff,
+        -3px  3px 0 #fff,
+         3px  3px 0 #fff,
+         4px  4px 0px rgba(59, 130, 246, 0.2);
+      animation: bounce 2s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: #ff758f;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    /* Illustration Canvas Wrapper */
+    .illustration-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+      flex-grow: 1;
+      padding: 10px 0;
+    }
+
+    .bear-svg {
+      width: 100%;
+      max-width: 340px;
+      height: auto;
+    }
+
+    /* Bouncy animations for the characters to bring them to life */
+    .male-bear {
+      animation: gentleSwayLeft 4s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+    }
+
+    .female-bear {
+      animation: gentleSwayRight 4s ease-in-out infinite alternate;
+      transform-origin: bottom center;
+    }
+
+    @keyframes gentleSwayLeft {
+      0% { transform: rotate(-2deg); }
+      100% { transform: rotate(2deg); }
+    }
+
+    @keyframes gentleSwayRight {
+      0% { transform: rotate(2deg) translateX(-5px); }
+      100% { transform: rotate(-2deg) translateX(0); }
+    }
+
+    /* Interactive 3D Blue Button */
+    .btn-container {
+      z-index: 2;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .play-btn {
+      background: linear-gradient(180deg, #5097FF 0%, #2563EB 100%);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 
+        0 8px 0px #1d4ed8,
+        0 15px 25px rgba(37, 99, 235, 0.3);
+      transition: all 0.1s ease;
+      outline: none;
+      user-select: none;
+    }
+
+    .play-btn:active {
+      transform: translateY(4px);
+      box-shadow: 
+        0 4px 0px #1d4ed8,
+        0 8px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    .play-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hidden Audio Element -->
+  <!-- Update "your-voicenote-url.mp3" to the path of your audio file -->
+  <!-- Hidden Audio Element -->
+<audio id="birthday-audio" src="voicenote.oga" preload="auto"></audio>
+
+  <div class="app-container">
+    
+    <!-- Floating pastel hearts background -->
+    <div class="floating-decor" id="decorations"></div>
+
+    <div class="header-container">
+      <h1 class="title">Happy Birthday!</h1>
+      <div class="subtitle">✨ Tap to play my message to you! ✨</div>
+    </div>
+
+    <!-- The Bears and Cake SVG Illustration -->
+    <div class="illustration-wrapper">
+      <svg class="bear-svg" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+        
+        <!-- Cloud Platform Ground -->
+        <path d="M50 250 C 100 230, 350 230, 350 250 C 370 258, 380 275, 310 275 C 240 275, 160 275, 90 275 C 20 275, 30 258, 50 250 Z" fill="#F3F4F6" opacity="0.9"/>
+
+        <!-- Gift image -->
+        <image href="https://thumbs.dreamstime.com/b/hand-drawn-teddy-bear-cartoon-cake-birthday-party-445883607.jpg" 
+        x="35" y="5" width="330" height="320" preserveAspectRatio="xMidYMid meet"/>
+
+      </svg>
+    </div>
+
+    <!-- The Voice Note Button -->
+    <div class="btn-container">
+      <button class="play-btn" onclick="toggleAudio()">
+        <!-- Mic Icon -->
+        <svg viewBox="0 0 23 24">
+          <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/>
+        </svg>
+        <span id="btn-text">Play Voicenote!</span>
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    const audio = document.getElementById('birthday-audio');
+    const btnText = document.getElementById('btn-text');
+
+    // Trigger Initial Birthday Confetti on load
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        fireCelebrationConfetti();
+      }, 500);
+      generateFloatingElements();
+    });
+
+    // Toggle Audio Playback
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.play().then(() => {
+          btnText.textContent = "Pause Voicenote";
+          fireCelebrationConfetti();
+        }).catch(err => {
+          console.log("Audio play blocked by browser. Make sure your filepath is correct!", err);
+        });
+      } else {
+        audio.pause();
+        btnText.textContent = "Play Voicenote";
+      }
+    }
+
+    // Interactive Confetti Effect
+    function fireCelebrationConfetti() {
+      confetti({
+        particleCount: 120,
+        spread: 70,
+        origin: { y: 0.75 },
+        colors: ['#3B82F6', '#FBCFE8', '#F472B6', '#FBBF24', '#C69C6D']
+      });
+    }
+
+    // Generate Floating Pink Hearts and Sparkles in Background
+    function generateFloatingElements() {
+      const decorContainer = document.getElementById('decorations');
+      const colors = ['#FFC0CB', '#FFB6C1', '#FF69B4', '#87CEFA', '#B0C4DE'];
+      
+      for (let i = 0; i < 15; i++) {
+        const item = document.createElement('div');
+        const isHeart = Math.random() > 0.5;
+        
+        item.className = isHeart ? 'heart' : 'sparkle';
+        item.style.left = `${Math.random() * 100}%`;
+        item.style.animationDelay = `${Math.random() * 6}s`;
+        item.style.fontSize = `${Math.random() * 12 + 12}px`;
+        item.style.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        item.innerHTML = isHeart ? '🌸' : '✨';
+        decorContainer.appendChild(item);
+      }
+    }
+  </script>
+</body>
+</html>
